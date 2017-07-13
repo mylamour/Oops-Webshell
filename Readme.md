@@ -3,7 +3,7 @@
 ### 检测方法通常有
 
 * 基于日志,行为,流量
-* 基于统计学Machine Learning ,Fuzzy Hash, Code Features
+* 基于Machine Learning ,Fuzzy Hash, Code Features
 
 ### 此处初期选择采用以下方法
 
@@ -13,4 +13,15 @@
 
 ### Other
 
+![Design](./funny.svg)
+Also Include A CLI, Flask As Web Server
+
+`curl -i -X PUT -F filedata=@1.php "http://localhost:5000/detect"`
+
+### To do
+
+* Write Unit Test,Mock Test
+* Write Yara Rule
+* GAN ? Important
+(Mei you zhong wen shu ru fa de jie guo...)
 
