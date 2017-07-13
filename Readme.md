@@ -13,7 +13,7 @@
 
 ### Other
 
-![Design](./funny.svg)
+![Design](./funny.png)
 Also Include A CLI, Flask As Web Server
 
 `curl -i -X PUT -F filedata=@1.php "http://localhost:5000/detect"`
