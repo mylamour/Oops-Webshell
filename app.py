@@ -10,7 +10,7 @@ from logging import Formatter, FileHandler
 from flask import Flask, request, jsonify,make_response,url_for,Response
 from werkzeug.utils import secure_filename
 from uuid import uuid1
-from webshelldetect import *
+from webshell.webshelldetect import webshelldetect
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -52,7 +52,6 @@ def upload():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))  # str(uuid1())
             res = webshelldetect(app.config['UPLOAD_FOLDER'],php_ssdeep_features,php_yara_rule,php_checkpoint)
             # May be there need a benchmark function
-
         return jsonify({"Result":res})
     elif request.method == 'GET':
         return jsonify({"Warning":"Only use put to upload your file for detect"})

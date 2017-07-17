@@ -16,14 +16,21 @@ def yara(rule_path,dir_path):
     p = subprocess.Popen(['yara','-r',rule_path, dir_path] , stdout=subprocess.PIPE)
     a = p.stdout.read().decode('utf8')
     funny_res = []
-    tmp = {}
-    r = re.compile('^[a-zA-Z]{0,16}')
-    for _ in a.split('\n'):
-        # 将第一个空格之后的一切作为abs路径和文件名，重新进行路径切割，避免文件名空格导致切分错误
-        file_path,file_name = os.path.split(''.join(_.split(' ')[1:]))
-        tmp={'file_type': r.findall(_)[0], 'file_path':file_path,'file_name':file_name}
-        funny_res.append(tmp)
-    return funny_res
+    if len(funny_res) == 1 and funny_res[0].file_name == '':
+        # tmp = {'file_type': r.findall(_)[0], 'file_path':file_path,'file_name':file_name}
+        # return tmp
+        return None
+    else:
+        tmp = {}
+        r = re.compile('^[a-zA-Z]{0,16}')
+        for _ in a.split('\n'):
+            # 将第一个空格之后的一切作为abs路径和文件名，重新进行路径切割，避免文件名空格导致切分错误
+            file_path,file_name = os.path.split(''.join(_.split(' ')[1:]))
+            tmp={'file_type': r.findall(_)[0], 'file_path':file_path,'file_name':file_name}
+            funny_res.append(tmp)
+        del funny_res[-1]
+
+        return funny_res
 
 def ssdeep(rule_path,dir_path):
     # ssdeep -bsm  /home/mour/working/data/ssdeep/php.ssdeep  -r ./php -t 75 -c

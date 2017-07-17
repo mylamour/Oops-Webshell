@@ -2,23 +2,22 @@
 # coding: utf-8
 # author : I
 
-from ssdeep_yara import ssdeep,yara
-from ml.aeval import read_and_predict
+from .ssdeep_yara import ssdeep,yara
+from .ml.aeval import read_and_predict
 
 
 """
     when you import somehing use relative path, you need change a lot of import , How to slove it ? it' turely funny
 """
 
-def webshelldetect(dir_path,ssdeep_php_features_path,yara_rule_path,checkpoint_path):
+def webshelldetect(dir_path,ssdeep_features_path,yara_rule_path,checkpoint_path):
     """
         You must pass a diectory path was not null
     """
     res = []
 
-    res1 = ssdeep(ssdeep_php_features_path,dir_path)
+    res1 = ssdeep(ssdeep_features_path,dir_path)
     res2 = yara(yara_rule_path,dir_path)
-
     # So firstly we combine the two resouce? En, It's should be. 
 
     # res2 include res1, beacuse yara can check every file in the directory, but ssdeep only return the match file above a value
@@ -49,7 +48,7 @@ def webshelldetect(dir_path,ssdeep_php_features_path,yara_rule_path,checkpoint_p
             pass
         finally:
             pass
-                
+    
     res = res1 + res2
     return res
 
