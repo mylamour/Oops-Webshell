@@ -12,7 +12,7 @@ WhiteList 和 BlackList文件夹仍旧用于存放数据，但黑名单和白名
 
 Yara的数据由来:
 
-* 详细请参考 	http://xx/xx/webshell-detector/wikis/Yara
+* 详细请参考
 
 重要事情:
 
