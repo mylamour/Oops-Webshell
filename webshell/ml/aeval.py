@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+#coding=utf-8
 #  Change from "https://github.com/dennybritz/cnn-text-classification-tf/blob/master/eval.py
 #  Apply it to predict webshell or not 
 #  Useage:
@@ -92,7 +92,6 @@ def read_and_predict(m_unknown_file,m_checkpoint_dir):
         x_test = np.array(list(vocab_processor.transform(x_raw)))
 
         results = predict_webshell(x_test,m_checkpoint_dir)
-
         for result in results:
             if result == 0 :
                 file_type = 'Dangerous'
@@ -102,8 +101,16 @@ def read_and_predict(m_unknown_file,m_checkpoint_dir):
                 # print(bcolors.OKGREEN + ":  Look Like Safe" + bcolors.ENDC)
             else:
                 return None
-        results_human_read = {'file_type': file_type, 'file_path':file_path,'file_name':file_name }   
+        results_human_read = {'file_type': file_type, 'file_name': file_name,
+                              'detect_method': 'Machine Learning', 'platform': 'Linux', 'description': "webshell文件或疑似webshell文件"}
         return results_human_read
+
+def read_and_predict_dir(m_dir,m_checkpoint_dir):
+    res = []
+    for p,d,f in os.walk(m_dir):
+        for item in f:
+            res.append(read_and_predict(os.path.join(p,item),m_checkpoint_dir))
+    return res
 
 def test():
     # 其实吧，每次预测一个文件都要启动tfsession导致挺慢的，批量预测时，还是用predict.sh来的方便吧。
